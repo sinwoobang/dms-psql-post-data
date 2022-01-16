@@ -2,6 +2,20 @@
 Ultimate Script to complete PostgreSQL-to-PostgreSQL Migration right after AWS DMS task done
 
 ## TL;DR
+Sequence, Foreign key, Index, and Constraint are available for migration.
+
+## Why you need it
 1. Sequence, Foreign key, Index, and Constraint are *not migrated* using AWS DMS.
 2. You must need them if you want to promote the target DB as primary.
 3. This script is responsible for completing a migration by putting them into your target DB.
+
+## How to Run
+### Migrating Sequence
+1. Run [sequences_generator.sql](https://github.com/sinwoobang/dms-psql-post-data/blob/main/sequences_generator.sql) on your source DB.
+2. Copy the result and run it on the target DB.
+
+### Migrating Index & Constraint
+1. npm i -g zx
+2. zx index_constraint_migration.mjs
+3. Input required data
+
