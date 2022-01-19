@@ -12,11 +12,11 @@ $$
               AND d.classid = 'pg_class'::regclass
         )
             LOOP
-                RAISE NOTICE 'RAISE NOTICE ''[START] %''', row;
+                RAISE NOTICE 'RAISE NOTICE ''[START] %'';', row;
                 RAISE NOTICE 'CREATE SEQUENCE IF NOT EXISTS % OWNED BY %.%;', row.sequence_name, row.schema, row.field;
                 RAISE NOTICE 'PERFORM setval(''%'', (SELECT COALESCE(max(%), 0) + 1 FROM %));', row.sequence_name, row.field, row.schema;
                 RAISE NOTICE 'ALTER TABLE % ALTER COLUMN % SET DEFAULT nextVal(''%'');', row.schema, row.field, row.sequence_name;
             END LOOP;
-        RAISE NOTICE 'RAISE NOTICE ''[DONE]''';
+        RAISE NOTICE 'RAISE NOTICE ''[DONE]'';';
     END
 $$;
