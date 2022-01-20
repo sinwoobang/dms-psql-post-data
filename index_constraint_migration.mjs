@@ -1,6 +1,9 @@
 #!/usr/bin/env zx
 
-const log = console.log
+$.verbose = false;
+const log = console.log;
+const error = chalk.bold.red;
+
 
 log();
 log(chalk.green("Welcome to dms-psql-post-data"));
@@ -20,8 +23,23 @@ let tarDBPass = await question('[8/8] Target DB Password: ');
 
 process.env.PGPASSWORD = srcDBPass
 log(chalk.yellow('Dumping Source DB Post-data(Index, Constraint)...'));
-await $`pg_dump -h ${srcDBHost} -U ${srcDBUser} -Fc ${srcDBName} --section=post-data > postdata.dump`
+
+try {
+  await $`pg_dump -h ${srcDBHost} -U ${srcDBUser} -Fc ${srcDBName} --section=post-data > postdata.dump`;
+} catch (p) {
+  log(error('Exception detected: Is your Source DB information correct?'));
+  log(error(`Error: ${p.stderr}`));
+}
 
 process.env.PGPASSWORD = tarDBPass
 log(chalk.yellow('Restoring Post-data on Target DB...'));
-await $`pg_restore -h ${tarDBHost} -U ${tarDBUser} -d ${tarDBName} -j 10 -v postdata.dump`
+
+try {
+  await $`pg_restore -h ${tarDBHost} -U ${tarDBUser} -d ${tarDBName} -j 10 -v postdata.dump`;
+} catch (p) {
+  log(error('Exception detected: Is your Target DB information correct?'));
+  log(error(`Error: ${p.stderr}`));
+}
+
+log();
+log(chalk.yellow('Finished'))
