@@ -21,6 +21,12 @@ let tarDBUser = await question('[6/8] Target DB User: ');
 let tarDBName = await question('[7/8] Target DB Name: ');
 let tarDBPass = await question('[8/8] Target DB Password: ');
 
+log('Input the number of job workers');
+log(chalk.yellow('NOTE: Increasing the number makes it faster, however it may cause DB locks.'));
+
+let restoreJobWorkerNum = await question('Default value[1]: ');
+restoreJobWorkerNum = restoreJobWorkerNum ? restoreJobWorkerNum : 1;
+
 process.env.PGPASSWORD = srcDBPass
 log(chalk.yellow('Dumping Source DB Post-data(Index, Constraint)...'));
 
@@ -35,7 +41,7 @@ process.env.PGPASSWORD = tarDBPass
 log(chalk.yellow('Restoring Post-data on Target DB...'));
 
 try {
-  await $`pg_restore -h ${tarDBHost} -U ${tarDBUser} -d ${tarDBName} -j 10 -v postdata.dump`;
+  await $`pg_restore -h ${tarDBHost} -U ${tarDBUser} -d ${tarDBName} -j ${restoreJobWorkerNum} -v postdata.dump`;
 } catch (p) {
   log(error('Exception detected: Is your Target DB information correct?'));
   log(error(`Error: ${p.stderr}`));
