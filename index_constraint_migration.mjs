@@ -72,10 +72,12 @@ await init();
 const config = await configure();
 
 const skipDump = argv["skip-dump"];
-if (!skipDump) {
+if (skipDump) {
   log(chalk.cyan("Skip dump data..."));
+} else {
   await dumpPostData(config);
 }
+
 await restorePostData(config);
 
 log();
