@@ -21,6 +21,10 @@ npm -i g zx
 2. Copy the result and run it on the target DB.
 
 ### Migrating Index & Constraint
-1. Revise info.js
-2. zx [index_constraint_migration.mjs](https://github.com/sinwoobang/dms-psql-post-data/blob/main/index_constraint_migration.mjs)
+1. Copy a template file
+```sh
+cp info-template.js info.js
+```
+2. Revise info.js
+3. zx [index_constraint_migration.mjs](https://github.com/sinwoobang/dms-psql-post-data/blob/main/index_constraint_migration.mjs)
 
