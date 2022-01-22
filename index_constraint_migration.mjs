@@ -37,7 +37,7 @@ async function configure() {
   };
 }
 
-async function dumpPostData({ srcDBHost, srcDBUser, srcDBName }) {
+async function dumpPostData({ srcDBHost, srcDBUser, srcDBName, srcDBPass }) {
   process.env.PGPASSWORD = srcDBPass;
   log(chalk.yellow("Dumping Source DB Post-data(Index, Constraint)..."));
 
