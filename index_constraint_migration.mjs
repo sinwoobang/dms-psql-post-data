@@ -29,6 +29,7 @@ async function configure() {
 
   let restoreJobWorkerNum = await question(chalk.cyan("Default value[1]: "));
   restoreJobWorkerNum = restoreJobWorkerNum ? restoreJobWorkerNum : 1;
+  log();
 
   return {
     ...dbInfo,
@@ -70,7 +71,11 @@ await init();
 
 const config = await configure();
 
-await dumpPostData(config);
+const skipDump = argv["skip-dump"];
+if (!skipDump) {
+  log(chalk.cyan("Skip dump data..."));
+  await dumpPostData(config);
+}
 await restorePostData(config);
 
 log();
