@@ -1,0 +1,10 @@
+{
+  "srcDBHost": "",
+  "srcDBName": "",
+  "srcDBUser": "",
+  "srcDBPass": "",
+  "tarDBHost": "",
+  "tarDBName": "",
+  "tarDBUser": "",
+  "tarDBPass": ""
+}
