@@ -7,7 +7,7 @@ $$
             SELECT d.refobjid::regclass as schema, a.attname as field, seq.sequence_name
             FROM pg_depend d
                  INNER JOIN pg_attribute a ON a.attrelid = d.refobjid AND a.attnum = d.refobjsubid
-                 INNER JOIN information_schema.sequences as seq ON d.objid = seq.sequence_name::regclass
+                 INNER JOIN information_schema.sequences as seq ON d.objid = ('"' || seq.sequence_schema || '"."' || seq.sequence_name || '"')::regclass
             WHERE d.refobjsubid > 0
               AND d.classid = 'pg_class'::regclass
         )
